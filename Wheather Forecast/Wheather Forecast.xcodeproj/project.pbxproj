@@ -14,6 +14,8 @@
 		208F16622AFB89210027FD83 /* Wheather_ForecastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16612AFB89210027FD83 /* Wheather_ForecastTests.swift */; };
 		208F166C2AFB89210027FD83 /* Wheather_ForecastUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F166B2AFB89210027FD83 /* Wheather_ForecastUITests.swift */; };
 		208F166E2AFB89210027FD83 /* Wheather_ForecastUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F166D2AFB89210027FD83 /* Wheather_ForecastUITestsLaunchTests.swift */; };
+		208F16832AFB9FD80027FD83 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16822AFB9FD80027FD83 /* AppRouter.swift */; };
+		208F16852AFB9FE20027FD83 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16842AFB9FE20027FD83 /* AppContainer.swift */; };
 		883CE9F042991E13E9091475 /* Pods_Wheather_ForecastTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F94EBBF4653606B2D7D9D0 /* Pods_Wheather_ForecastTests.framework */; };
 		8E63C703B2AD515D50499F46 /* Pods_Wheather_Forecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EA9DAD75B76B91952735413 /* Pods_Wheather_Forecast.framework */; };
 /* End PBXBuildFile section */
@@ -46,6 +48,8 @@
 		208F16672AFB89210027FD83 /* Wheather ForecastUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wheather ForecastUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		208F166B2AFB89210027FD83 /* Wheather_ForecastUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheather_ForecastUITests.swift; sourceTree = "<group>"; };
 		208F166D2AFB89210027FD83 /* Wheather_ForecastUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wheather_ForecastUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		208F16822AFB9FD80027FD83 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		208F16842AFB9FE20027FD83 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		2E525577D1995A3F1172B9E3 /* Pods-Wheather Forecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wheather Forecast.release.xcconfig"; path = "Target Support Files/Pods-Wheather Forecast/Pods-Wheather Forecast.release.xcconfig"; sourceTree = "<group>"; };
 		40A71A79A4B1F7730E1C37CF /* Pods-Wheather ForecastTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wheather ForecastTests.debug.xcconfig"; path = "Target Support Files/Pods-Wheather ForecastTests/Pods-Wheather ForecastTests.debug.xcconfig"; sourceTree = "<group>"; };
 		51F94EBBF4653606B2D7D9D0 /* Pods_Wheather_ForecastTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wheather_ForecastTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,6 +114,7 @@
 		208F16492AFB891B0027FD83 /* Wheather Forecast */ = {
 			isa = PBXGroup;
 			children = (
+				208F16862AFBA02C0027FD83 /* Utilities */,
 				208F167E2AFB8C2A0027FD83 /* App */,
 				208F16802AFB8C900027FD83 /* Scenes */,
 				208F16812AFB8C960027FD83 /* Recources */,
@@ -139,6 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				208F164A2AFB891B0027FD83 /* AppDelegate.swift */,
+				208F16822AFB9FD80027FD83 /* AppRouter.swift */,
+				208F16842AFB9FE20027FD83 /* AppContainer.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -167,6 +174,13 @@
 			path = Recources;
 			sourceTree = "<group>";
 		};
+		208F16862AFBA02C0027FD83 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		71A75C6998900500BC35BD9B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,7 +191,6 @@
 				40A71A79A4B1F7730E1C37CF /* Pods-Wheather ForecastTests.debug.xcconfig */,
 				EF3B1469C4B69D024469934B /* Pods-Wheather ForecastTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -429,7 +442,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				208F16832AFB9FD80027FD83 /* AppRouter.swift in Sources */,
 				208F164B2AFB891B0027FD83 /* AppDelegate.swift in Sources */,
+				208F16852AFB9FE20027FD83 /* AppContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
