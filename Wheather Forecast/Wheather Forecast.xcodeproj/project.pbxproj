@@ -116,7 +116,6 @@
 			children = (
 				208F16862AFBA02C0027FD83 /* Utilities */,
 				208F167E2AFB8C2A0027FD83 /* App */,
-				208F16802AFB8C900027FD83 /* Scenes */,
 				208F16812AFB8C960027FD83 /* Recources */,
 				208F167F2AFB8C880027FD83 /* SupportingFiles */,
 			);
@@ -157,13 +156,6 @@
 				208F16582AFB89200027FD83 /* Info.plist */,
 			);
 			path = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		208F16802AFB8C900027FD83 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scenes;
 			sourceTree = "<group>";
 		};
 		208F16812AFB8C960027FD83 /* Recources */ = {
