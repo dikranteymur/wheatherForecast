@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		208F164B2AFB891B0027FD83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F164A2AFB891B0027FD83 /* AppDelegate.swift */; };
-		208F164D2AFB891B0027FD83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F164C2AFB891B0027FD83 /* SceneDelegate.swift */; };
-		208F164F2AFB891B0027FD83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F164E2AFB891B0027FD83 /* ViewController.swift */; };
-		208F16522AFB891B0027FD83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208F16502AFB891B0027FD83 /* Main.storyboard */; };
 		208F16542AFB89200027FD83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 208F16532AFB89200027FD83 /* Assets.xcassets */; };
 		208F16572AFB89200027FD83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208F16552AFB89200027FD83 /* LaunchScreen.storyboard */; };
 		208F16622AFB89210027FD83 /* Wheather_ForecastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16612AFB89210027FD83 /* Wheather_ForecastTests.swift */; };
@@ -38,9 +35,6 @@
 /* Begin PBXFileReference section */
 		208F16472AFB891B0027FD83 /* Wheather Forecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wheather Forecast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		208F164A2AFB891B0027FD83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		208F164C2AFB891B0027FD83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		208F164E2AFB891B0027FD83 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		208F16512AFB891B0027FD83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		208F16532AFB89200027FD83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		208F16562AFB89200027FD83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		208F16582AFB89200027FD83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,13 +93,10 @@
 		208F16492AFB891B0027FD83 /* Wheather Forecast */ = {
 			isa = PBXGroup;
 			children = (
-				208F164A2AFB891B0027FD83 /* AppDelegate.swift */,
-				208F164C2AFB891B0027FD83 /* SceneDelegate.swift */,
-				208F164E2AFB891B0027FD83 /* ViewController.swift */,
-				208F16502AFB891B0027FD83 /* Main.storyboard */,
-				208F16532AFB89200027FD83 /* Assets.xcassets */,
-				208F16552AFB89200027FD83 /* LaunchScreen.storyboard */,
-				208F16582AFB89200027FD83 /* Info.plist */,
+				208F167E2AFB8C2A0027FD83 /* App */,
+				208F16802AFB8C900027FD83 /* Scenes */,
+				208F16812AFB8C960027FD83 /* Recources */,
+				208F167F2AFB8C880027FD83 /* SupportingFiles */,
 			);
 			path = "Wheather Forecast";
 			sourceTree = "<group>";
@@ -125,6 +116,38 @@
 				208F166D2AFB89210027FD83 /* Wheather_ForecastUITestsLaunchTests.swift */,
 			);
 			path = "Wheather ForecastUITests";
+			sourceTree = "<group>";
+		};
+		208F167E2AFB8C2A0027FD83 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				208F164A2AFB891B0027FD83 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		208F167F2AFB8C880027FD83 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				208F16552AFB89200027FD83 /* LaunchScreen.storyboard */,
+				208F16582AFB89200027FD83 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		208F16802AFB8C900027FD83 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		208F16812AFB8C960027FD83 /* Recources */ = {
+			isa = PBXGroup;
+			children = (
+				208F16532AFB89200027FD83 /* Assets.xcassets */,
+			);
+			path = Recources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +256,6 @@
 			files = (
 				208F16572AFB89200027FD83 /* LaunchScreen.storyboard in Resources */,
 				208F16542AFB89200027FD83 /* Assets.xcassets in Resources */,
-				208F16522AFB891B0027FD83 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,9 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				208F164F2AFB891B0027FD83 /* ViewController.swift in Sources */,
 				208F164B2AFB891B0027FD83 /* AppDelegate.swift in Sources */,
-				208F164D2AFB891B0027FD83 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,14 +317,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		208F16502AFB891B0027FD83 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				208F16512AFB891B0027FD83 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		208F16552AFB89200027FD83 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -444,10 +456,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MM2C8HD34J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Wheather Forecast/Info.plist";
+				INFOPLIST_FILE = "Wheather Forecast/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -472,10 +483,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MM2C8HD34J;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Wheather Forecast/Info.plist";
+				INFOPLIST_FILE = "Wheather Forecast/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
