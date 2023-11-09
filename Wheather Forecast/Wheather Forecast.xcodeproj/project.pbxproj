@@ -21,6 +21,11 @@
 		208F16B22AFBFD590027FD83 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16B12AFBFD590027FD83 /* AppService.swift */; };
 		208F16B42AFC073D0027FD83 /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208F16B32AFC073D0027FD83 /* RequestModel.swift */; };
 		20CB1C362AFCDD6A00E5B53B /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB1C352AFCDD6A00E5B53B /* Request.swift */; };
+		20CB1C4D2AFD4F9100E5B53B /* Exo2-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20CB1C492AFD4F9100E5B53B /* Exo2-Regular.ttf */; };
+		20CB1C4E2AFD4F9100E5B53B /* Exo2-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20CB1C4A2AFD4F9100E5B53B /* Exo2-Thin.ttf */; };
+		20CB1C4F2AFD4F9100E5B53B /* Exo2-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20CB1C4B2AFD4F9100E5B53B /* Exo2-SemiBold.ttf */; };
+		20CB1C502AFD4F9100E5B53B /* Exo2-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20CB1C4C2AFD4F9100E5B53B /* Exo2-Light.ttf */; };
+		20CB1C532AFD505500E5B53B /* CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CB1C522AFD505500E5B53B /* CustomFont.swift */; };
 		883CE9F042991E13E9091475 /* Pods_Wheather_ForecastTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F94EBBF4653606B2D7D9D0 /* Pods_Wheather_ForecastTests.framework */; };
 		8E63C703B2AD515D50499F46 /* Pods_Wheather_Forecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EA9DAD75B76B91952735413 /* Pods_Wheather_Forecast.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +65,11 @@
 		208F16B12AFBFD590027FD83 /* AppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
 		208F16B32AFC073D0027FD83 /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		20CB1C352AFCDD6A00E5B53B /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		20CB1C492AFD4F9100E5B53B /* Exo2-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Regular.ttf"; sourceTree = "<group>"; };
+		20CB1C4A2AFD4F9100E5B53B /* Exo2-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Thin.ttf"; sourceTree = "<group>"; };
+		20CB1C4B2AFD4F9100E5B53B /* Exo2-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-SemiBold.ttf"; sourceTree = "<group>"; };
+		20CB1C4C2AFD4F9100E5B53B /* Exo2-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo2-Light.ttf"; sourceTree = "<group>"; };
+		20CB1C522AFD505500E5B53B /* CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFont.swift; sourceTree = "<group>"; };
 		2E525577D1995A3F1172B9E3 /* Pods-Wheather Forecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wheather Forecast.release.xcconfig"; path = "Target Support Files/Pods-Wheather Forecast/Pods-Wheather Forecast.release.xcconfig"; sourceTree = "<group>"; };
 		40A71A79A4B1F7730E1C37CF /* Pods-Wheather ForecastTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Wheather ForecastTests.debug.xcconfig"; path = "Target Support Files/Pods-Wheather ForecastTests/Pods-Wheather ForecastTests.debug.xcconfig"; sourceTree = "<group>"; };
 		51F94EBBF4653606B2D7D9D0 /* Pods_Wheather_ForecastTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Wheather_ForecastTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +183,7 @@
 		208F16812AFB8C960027FD83 /* Recources */ = {
 			isa = PBXGroup;
 			children = (
+				20CB1C482AFD4ECD00E5B53B /* Fonts */,
 				208F16532AFB89200027FD83 /* Assets.xcassets */,
 			);
 			path = Recources;
@@ -181,6 +192,7 @@
 		208F16862AFBA02C0027FD83 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				20CB1C512AFD503700E5B53B /* Extensions */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -194,6 +206,25 @@
 				208F16B32AFC073D0027FD83 /* RequestModel.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		20CB1C482AFD4ECD00E5B53B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				20CB1C4C2AFD4F9100E5B53B /* Exo2-Light.ttf */,
+				20CB1C492AFD4F9100E5B53B /* Exo2-Regular.ttf */,
+				20CB1C4B2AFD4F9100E5B53B /* Exo2-SemiBold.ttf */,
+				20CB1C4A2AFD4F9100E5B53B /* Exo2-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		20CB1C512AFD503700E5B53B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				20CB1C522AFD505500E5B53B /* CustomFont.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		71A75C6998900500BC35BD9B /* Pods */ = {
@@ -330,6 +361,10 @@
 			files = (
 				208F16572AFB89200027FD83 /* LaunchScreen.storyboard in Resources */,
 				208F16542AFB89200027FD83 /* Assets.xcassets in Resources */,
+				20CB1C4F2AFD4F9100E5B53B /* Exo2-SemiBold.ttf in Resources */,
+				20CB1C4D2AFD4F9100E5B53B /* Exo2-Regular.ttf in Resources */,
+				20CB1C4E2AFD4F9100E5B53B /* Exo2-Thin.ttf in Resources */,
+				20CB1C502AFD4F9100E5B53B /* Exo2-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20CB1C532AFD505500E5B53B /* CustomFont.swift in Sources */,
 				208F16832AFB9FD80027FD83 /* AppRouter.swift in Sources */,
 				208F16B22AFBFD590027FD83 /* AppService.swift in Sources */,
 				208F16AE2AFBFA530027FD83 /* RequestProtocol.swift in Sources */,
