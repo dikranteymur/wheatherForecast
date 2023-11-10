@@ -114,9 +114,7 @@
 		208F16492AFB891B0027FD83 /* Wheather Forecast */ = {
 			isa = PBXGroup;
 			children = (
-				208F16862AFBA02C0027FD83 /* Utilities */,
 				208F167E2AFB8C2A0027FD83 /* App */,
-				208F16802AFB8C900027FD83 /* Scenes */,
 				208F16812AFB8C960027FD83 /* Recources */,
 				208F167F2AFB8C880027FD83 /* SupportingFiles */,
 			);
@@ -159,26 +157,12 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		208F16802AFB8C900027FD83 /* Scenes */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Scenes;
-			sourceTree = "<group>";
-		};
 		208F16812AFB8C960027FD83 /* Recources */ = {
 			isa = PBXGroup;
 			children = (
 				208F16532AFB89200027FD83 /* Assets.xcassets */,
 			);
 			path = Recources;
-			sourceTree = "<group>";
-		};
-		208F16862AFBA02C0027FD83 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		71A75C6998900500BC35BD9B /* Pods */ = {
