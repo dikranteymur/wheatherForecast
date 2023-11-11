@@ -219,4 +219,10 @@ extension HomeViewController: UITableViewDataSource {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = DetailBuilder.make()
+        let nav = UINavigationController(rootViewController: detailViewController)
+        present(nav, animated: true)
+    }
 }
+
