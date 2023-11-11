@@ -26,7 +26,7 @@ struct UserCacheHelpers {
         return UserDefaults.standard.bool(forKey: UserCacheKeys.isCelcius.rawValue)
     }
     
-    static func setIsLocation(value: Bool) {
+    static func setIsCelcius(value: Bool) {
         UserDefaults.standard.setValue(value, forKey: UserCacheKeys.isCelcius.rawValue)
     }
 }
