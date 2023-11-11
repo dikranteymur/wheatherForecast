@@ -20,9 +20,12 @@ struct AppService: AppServiceProtocol {
     
     init() {
         let configuration = URLSessionConfiguration.af.default
-        configuration.timeoutIntervalForRequest = 15
-        configuration.requestCachePolicy = .reloadRevalidatingCacheData
-        session = Session(configuration: configuration)
+        configuration.requestCachePolicy = .returnCacheDataElseLoad
+        let responserCacher = ResponseCacher(behavior: .modify({ _, response in
+            let userInfo = ["date": Date()]
+            return CachedURLResponse(response: response.response, data: response.data, userInfo: userInfo, storagePolicy: .allowed)
+        }))
+        session = Session(configuration: configuration, cachedResponseHandler: responserCacher)
     }
     
     func request<T: RequestProtocol>(request: T, result: ResponseData<T.ResponseModel>?) {
