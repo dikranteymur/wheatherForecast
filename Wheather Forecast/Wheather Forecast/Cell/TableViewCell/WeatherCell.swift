@@ -59,10 +59,12 @@ final class WeatherCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    private var viewModel: CellViewModel?
+    private var model: WeatherInfoModel?
+    private var date: String?
     
-    func setCell(viewModel: CellViewModel?) {
-        self.viewModel = viewModel
+    func setCell(model: WeatherInfoModel?, date: String?) {
+        self.model = model
+        self.date = date
         configureContents()
     }
 }
@@ -90,37 +92,13 @@ extension WeatherCell {
 extension WeatherCell {
     
     private func configureContents() {
-        guard let viewModel = viewModel else { return }
-        sepLabel.text = "/"
-        dayLabel.text = viewModel.day
-        weatherImageView.image = viewModel.icon
-        minTempLabel.text = viewModel.minTem
-        maxTempLabel.text = viewModel.maxTem
-    }
-}
-
-struct CellViewModel {
-    var day: String
-    var icon: UIImage
-    var minTem: String
-    var maxTem: String
-}
-
-class CellDatas {
-    static func getData() -> [CellViewModel] {
-        return [CellViewModel(day: "Bugun", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Cmt", icon: UIImage(systemName: "cloud.fill")!, minTem: "12", maxTem: "20"),
-                CellViewModel(day: "Paz", icon: UIImage(systemName: "cloud.rain.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Pzt", icon: UIImage(systemName: "cloud.sun.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Sal", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Car", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Per", icon: UIImage(systemName: "cloud.sun.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Bugun", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Cmt", icon: UIImage(systemName: "cloud.fill")!, minTem: "12", maxTem: "20"),
-                CellViewModel(day: "Paz", icon: UIImage(systemName: "cloud.rain.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Pzt", icon: UIImage(systemName: "cloud.sun.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Sal", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17"),
-                CellViewModel(day: "Car", icon: UIImage(systemName: "sun.max.fill")!, minTem: "8", maxTem: "17")
-        ]
+        guard let model = model else { return }
+        dayLabel.text = DateHelper.shared.getDaySymbolFromDateString(date: date)
+        weatherImageView.image = UIImage()
+        if let tempMin = model.main?.tempMin, let tempMax = model.main?.tempMax {
+            minTempLabel.text = String(tempMin)
+            maxTempLabel.text = String(tempMax)
+            sepLabel.text = "/"
+        }
     }
 }

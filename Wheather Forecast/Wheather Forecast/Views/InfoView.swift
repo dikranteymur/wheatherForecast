@@ -44,19 +44,19 @@ final class InfoView: UIView {
         return stackView
     }()
     
-    var title: String {
+    var title: String? {
         didSet {
             infoLabel.text = title
         }
     }
     
-    var icon: UIImage {
+    var icon: UIImage? {
         didSet {
             iconImageView.image = icon
         }
     }
     
-    var iconColor: UIColor {
+    var iconColor: UIColor? {
         didSet {
             iconImageView.tintColor = iconColor
         }

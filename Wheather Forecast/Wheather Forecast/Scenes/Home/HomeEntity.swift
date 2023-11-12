@@ -7,6 +7,48 @@
 
 import Foundation
 
-final class HomeEntity {
+struct WeatherListModel: Decodable {
+    let list: [WeatherInfoModel]?
+    let date: String?
     
+    private enum CodingKeys: String, CodingKey {
+        case list
+        case date = "dt_txt"
+    }
+}
+
+struct WeatherInfoModel: Decodable {
+    let weather: [WeatherModel]?
+    let main: MainModel?
+    let wind: WindModel?
+    let sys: SysModel?
+    let name: String?
+}
+
+struct WeatherModel: Decodable {
+    let main: String?
+    let description: String?
+    let icon: String?
+}
+
+struct MainModel: Decodable {
+    let temp: Double?
+    let tempMin: Double?
+    let tempMax: Double?
+    let humidity: Int?
+    
+    private enum CodingKeys: String, CodingKey {
+        case temp
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case humidity
+    }
+}
+
+struct WindModel: Decodable {
+    let speed: Double?
+}
+
+struct SysModel: Decodable {
+    let country: String?
 }

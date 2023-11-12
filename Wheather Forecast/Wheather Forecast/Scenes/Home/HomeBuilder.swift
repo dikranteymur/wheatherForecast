@@ -10,7 +10,11 @@ import UIKit
 final class HomeBuilder {
     
     static func make() -> HomeViewController {
-        let viewController = HomeViewController()
-        return viewController
+        let view = HomeViewController()
+        let router = HomeRouter(view: view)
+        let interactor = HomeInteractor()
+        let presenter = HomePresenter(view: view, interactor: interactor, router: router)
+        view.presenter = presenter
+        return view
     }
 }

@@ -39,11 +39,21 @@ extension LocationHelper: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            currentLocation = locationManager?.location
             UserCacheHelpers.setHasLocation(value: true)
+            currentLocation = locationManager?.location
         default:
             UserCacheHelpers.setHasLocation(value: false)
             return
         }
+    }
+}
+
+// MARK: - Helpers
+extension LocationHelper {
+    
+    func currentLocaleIdentifier() -> String? {
+        guard let id = Locale.preferredLanguages[0].split(separator: "-").first else { return nil }
+        print(id)
+        return String(id)
     }
 }

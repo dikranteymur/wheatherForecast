@@ -36,6 +36,11 @@ final class DateHelper {
         dateFormatter?.dateFormat = Array(repeating: "E", count: length.rawValue).joined()
         return dateFormatter?.string(from: Date.now)
     }
+    
+    func getDaySymbolFromDateString(date: String?) -> String? {
+        guard let date = date, let dateString = dateFormatter?.date(from: date) else { return nil }
+        return dateFormatter?.string(from: dateString)
+    }
 }
 
 extension DateHelper {

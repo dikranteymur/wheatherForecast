@@ -11,7 +11,7 @@ import Alamofire
 typealias ResponseData<T: Decodable> = (Result<T, NetworkError>) -> Void
 
 protocol AppServiceProtocol {
-    func request<T: RequestProtocol>(request: T, result: ResponseData<T.ResponseModel>?)
+    func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?)
 }
 
 struct AppService: AppServiceProtocol {
@@ -22,13 +22,13 @@ struct AppService: AppServiceProtocol {
         let configuration = URLSessionConfiguration.af.default
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         let responserCacher = ResponseCacher(behavior: .modify({ _, response in
-            let userInfo = ["date": Date()]
+            let userInfo = ["Date": Date()]
             return CachedURLResponse(response: response.response, data: response.data, userInfo: userInfo, storagePolicy: .allowed)
         }))
         session = Session(configuration: configuration, cachedResponseHandler: responserCacher)
     }
     
-    func request<T: RequestProtocol>(request: T, result: ResponseData<T.ResponseModel>?) {
+    func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?) {
         let isReachable = NetworkReachabilityManager()?.isReachable ?? false
         if !isReachable {
             result?(.failure(.connectionError))

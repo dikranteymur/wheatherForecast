@@ -7,14 +7,9 @@
 
 import Foundation
 
-enum UserCacheKeys: String {
-    case hasLocation
-    case isCelcius
-}
-
 struct UserCacheHelpers {
     
-    static func hasLocation() -> Bool? {
+    static func hasLocation() -> Bool {
         return UserDefaults.standard.bool(forKey: UserCacheKeys.hasLocation.rawValue)
     }
     
@@ -22,11 +17,31 @@ struct UserCacheHelpers {
         UserDefaults.standard.setValue(value, forKey: UserCacheKeys.hasLocation.rawValue)
     }
     
-    static func isCelcius() -> Bool? {
+    static func isCelcius() -> Bool {
         return UserDefaults.standard.bool(forKey: UserCacheKeys.isCelcius.rawValue)
     }
     
     static func setIsCelcius(value: Bool) {
         UserDefaults.standard.setValue(value, forKey: UserCacheKeys.isCelcius.rawValue)
+    }
+    
+    static func saveCityNames(_ value: [String]) {
+        UserDefaults.standard.set(value, forKey: UserCacheKeys.savedCityNames.rawValue)
+    }
+    
+    static func getSavedCityNames() -> [String] {
+        if let savedCityNames = UserDefaults.standard.value(forKey: UserCacheKeys.savedCityNames.rawValue) as? [String] {
+            return savedCityNames
+        }
+        return []
+    }
+}
+
+// MARK: - UserCacheKeys
+extension UserCacheHelpers {
+    enum UserCacheKeys: String {
+        case hasLocation
+        case isCelcius
+        case savedCityNames
     }
 }

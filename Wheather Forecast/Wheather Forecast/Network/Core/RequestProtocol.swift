@@ -8,12 +8,12 @@
 import Foundation
 
 protocol RequestProtocol {
-    associatedtype ResponseModel: Decodable
+//    associatedtype ResponseModel: Decodable
     
     var endPoint: String { get }
     var method: HttpMethod { get }
-    var parameters: RequestParameters { get }
-    var headers: RequestHeaders { get}
+    var parameters: RequestParameters { get set }
+    var headers: RequestHeaders { get set }
     var encoding: EncodingType { get }
     var url: String { get }
 }
@@ -28,5 +28,8 @@ enum HttpMethod: String {
     case post
 }
 
-typealias RequestParameters = [String: Any]
-typealias RequestHeaders = [String: String]
+enum ApiUnits: String {
+    case standart
+    case metric
+    case imperial
+}

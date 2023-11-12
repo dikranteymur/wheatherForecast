@@ -20,7 +20,7 @@ struct RequestModel {
         self.parameters["apikey"] = "7b433d7b3f47e68281a12dee893e8f60"
         self.headers = request.headers
         self.encoding = request.encoding.afEncoding
-        self.url = baseUrl + request.endPoint
+        self.url = request.url
     }
 }
 
@@ -48,9 +48,9 @@ extension EncodingType {
     }
 }
 
-// MARK: - BaseUrl
-extension RequestModel {
-    var baseUrl: String {
-        return "https://api.openweathermap.org/"
-    }
-}
+//// MARK: - BaseUrl
+//extension RequestModel {
+//    var baseUrl: String {
+//        return "https://api.openweathermap.org/"
+//    }
+//}

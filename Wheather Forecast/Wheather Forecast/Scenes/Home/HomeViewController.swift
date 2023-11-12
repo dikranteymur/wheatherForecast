@@ -7,15 +7,20 @@
 
 import UIKit
 import TinyConstraints
+import Kingfisher
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, HomeViewProtocol {
     
-    private let data = HomeMockData.getDatas()
-    private let cellData = CellDatas.getData()
+    var presenter: HomePresenterProtocol?
+    
+    private var weatherInfoModel: WeatherInfoModel? = nil
+    private var weatherListModel: WeatherListModel? = nil
+    
+    private var tableViewHeightConstraint: Constraint?
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
@@ -23,20 +28,21 @@ final class HomeViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.isScrollEnabled = false
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(WeatherCell.self)
         return tableView
     }()
     
     private let cityNameLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .light, size: 22)
-        label.textColor = .darkGray
+        label.font = .customFont(type: .regular, size: 22)
+        label.textColor = .black
         return label
     }()
     
     private let todayLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .thin, size: 14)
+        label.font = .customFont(type: .light, size: 14)
         label.textColor = .black
         return label
     }()
@@ -65,7 +71,7 @@ final class HomeViewController: UIViewController {
     private let weatherInfoLabel: UILabel = {
         let label = UILabel()
         label.font = .customFont(type: .thin, size: 12)
-        label.textColor = .gray
+        label.textColor = .red
         return label
     }()
     
@@ -87,7 +93,24 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         addSubviews()
         configureContents()
-        
+        presenter?.load()
+    }
+    
+    func handleOutput(_ output: HomePresenterOutput) {
+        switch output {
+        case .setLoading(let isLoading):
+            print("IsLoading: \(isLoading)")
+        case .showInfo(let weatherInfoModel):
+            self.weatherInfoModel = weatherInfoModel
+            configureWeatherInfo()
+        case .showList(let weatherListModel):
+            self.weatherListModel = weatherListModel
+            tableView.reloadData()
+            if let count = weatherListModel.list?.count {
+                tableViewHeightConstraint?.constant = CGFloat(tableView.rowHeight * CGFloat(count))
+                tableView.layoutIfNeeded()
+            }
+        }
     }
 }
 
@@ -115,6 +138,8 @@ extension HomeViewController {
         cityStackView.addArrangedSubview(todayLabel)
         cityStackView.topToSuperview(offset: 20)
         cityStackView.centerXToSuperview()
+        cityNameLabel.height(44)
+        todayLabel.height(44)
     }
     
     private func addImageView() {
@@ -138,7 +163,8 @@ extension HomeViewController {
         tableView.topToBottom(of: temperatureStackView, offset: 20)
         tableView.bottomToSuperview()
         tableView.width(to: scrollView, relation: .equal)
-        tableView.height(1400)
+        tableView.height(1000)
+//        tableViewHeightConstraint = tableView.height(200)
     }
 }
 
@@ -149,12 +175,22 @@ extension HomeViewController {
         view.backgroundColor = .white
         configureScrollView()
         configureTableView()
-        
-        cityNameLabel.text = data.cityName
-        todayLabel.text = data.today
-        imageView.image = data.image
-        temperatureLabel.text = data.temperature
-        weatherInfoLabel.text = data.info
+    }
+    
+    private func configureWeatherInfo() {
+        guard let model = weatherInfoModel else { return }
+        cityNameLabel.text = model.name
+        todayLabel.text = DateHelper.shared.currentDaySymbol(length: .full)
+        if let icon = model.weather?.first?.icon {
+            imageView.kf.getImage(with: icon)
+        }
+        if let temp = model.main?.temp {
+            temperatureLabel.text = String(Int(temp))
+        }
+        if let description = model.weather?.first?.description {
+            weatherInfoLabel.text = description.capitalized
+            
+        }
     }
     
     private func configureScrollView() {
@@ -173,14 +209,14 @@ extension HomeViewController: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.scrollView {
-            if self.scrollView.contentOffset.y >= 400 {
+            if self.scrollView.contentOffset.y >= 320 {
                 tableView.isScrollEnabled = true
-                tableView.contentOffset.y = self.scrollView.contentOffset.y - 400
-                weatherInfoLabel.text = "Diyarbakir | Parcali Bulutlu"
+                tableView.contentOffset.y = self.scrollView.contentOffset.y - 320
+//                weatherInfoLabel.text = "\(data.cityName) | \(data.info)"
             } else {
                 tableView.isScrollEnabled = false
                 tableView.contentOffset.y = .zero
-                weatherInfoLabel.text = "Parcali Bulutlu"
+//                weatherInfoLabel.text = "Parcali Bulutlu"
             }
         }
         
@@ -200,29 +236,26 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "7 GUNLUK TAHMIN"
+        return "5 GUNLUK TAHMIN"
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellData.count
+        print("Count: \(weatherListModel?.list?.count)")
+        return weatherListModel?.list?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WeatherCell.self), for: indexPath) as? WeatherCell {
-            cell.setCell(viewModel: cellData[indexPath.row])
+            cell.setCell(model: weatherListModel?.list?[indexPath.row], date: weatherListModel?.date)
             return cell
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailViewController = DetailBuilder.make()
-        let nav = UINavigationController(rootViewController: detailViewController)
-        present(nav, animated: true)
+//        let detailViewController = DetailBuilder.make()
+//        let nav = UINavigationController(rootViewController: detailViewController)
+//        present(nav, animated: true)
+        presenter?.selectDayAt(indexPath: indexPath)
     }
 }
-
