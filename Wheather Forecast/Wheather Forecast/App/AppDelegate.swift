@@ -15,5 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         app.router.start()
         return true
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        configureCoreLocation()
+    }
 }
 
