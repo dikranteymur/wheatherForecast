@@ -17,10 +17,13 @@ final class HomeRouter: HomeRouterProtocol {
     
     func navigate(to route: HomeRoute) {
         switch route {
-        case .detail:
-            print("Detay Sayfasi Acilacak")
-        case .search:
-            print("Search Sayfasi Acilacak")
+        case .detail(let weatherInfoModel):
+            let detailViewcontroller = DetailBuilder.make(model: weatherInfoModel)
+            view.present(detailViewcontroller, animated: true)
+        case .search(let delegate):
+            let searchViewController = SearchBuilder.make(delegate: delegate)
+            searchViewController.modalPresentationStyle = .overCurrentContext
+            view.present(searchViewController, animated: true)
         }
     }
 }

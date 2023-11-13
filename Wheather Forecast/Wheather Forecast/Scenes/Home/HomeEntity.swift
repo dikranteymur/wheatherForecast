@@ -23,6 +23,13 @@ struct WeatherInfoModel: Decodable {
     let wind: WindModel?
     let sys: SysModel?
     let name: String?
+    let country: String?
+    let date: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case weather, main, wind, sys, name, country
+        case date = "dt_txt"
+    }
 }
 
 struct WeatherModel: Decodable {

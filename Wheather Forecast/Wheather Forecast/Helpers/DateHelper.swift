@@ -17,36 +17,43 @@ final class DateHelper {
     
     static var shared = DateHelper()
     
-    let dateFormatter: DateFormatter?
+    let dateFormatter = DateFormatter()
     
     init() {
-        dateFormatter = DateFormatter()
-        dateFormatter?.locale = Locale.current
+        dateFormatter.locale = getPreferredLocale()
+        dateFormatter.dateFormat = "E"
     }
     
     func currentHour() -> Int? {
-        return dateFormatter?.calendar.component(.hour, from: Date.now)
+        return dateFormatter.calendar.component(.hour, from: Date.now)
     }
     
     func currentDay() -> Int? {
-        return dateFormatter?.calendar.component(.day, from: Date.now)
+        return dateFormatter.calendar.component(.day, from: Date.now)
     }
     
     func currentDaySymbol(length: DaySymbolLength = .full) -> String? {
-        dateFormatter?.dateFormat = Array(repeating: "E", count: length.rawValue).joined()
-        return dateFormatter?.string(from: Date.now)
+        dateFormatter.dateFormat = Array(repeating: "E", count: length.rawValue).joined()
+        return dateFormatter.string(from: Date.now)
     }
     
     func getDaySymbolFromDateString(date: String?) -> String? {
-        guard let date = date, let dateString = dateFormatter?.date(from: date) else { return nil }
-        return dateFormatter?.string(from: dateString)
+        guard let date = date, let dateString = dateFormatter.date(from: date) else { return nil }
+        return dateFormatter.string(from: dateString)
     }
-}
-
-extension DateHelper {
     
-    private func getDeviceLocalizedModel() {
-        let model = UIDevice.current.localizedModel
-        print("Model: \(model)")
+    func getDayFrom(iso: String) -> Int? {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        if let date = dateFormatter.date(from: iso) {
+            return dateFormatter.calendar.component(.day, from: date)
+        }
+        return nil
+    }
+    
+    private func getPreferredLocale() -> Locale {
+        guard let preferredIdentifier = Locale.preferredLanguages.first else {
+            return Locale.current
+        }
+        return Locale(identifier: preferredIdentifier)
     }
 }

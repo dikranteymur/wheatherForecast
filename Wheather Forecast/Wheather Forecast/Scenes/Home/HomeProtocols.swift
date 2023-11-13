@@ -10,16 +10,15 @@ import Foundation
 // MARK: - Interactor
 protocol HomeInteractorProtocol {
     var delegate: HomeInteractorDelegate? { get set }
-    func load(cityName: String)
+    func load()
+    func loadWeatherList(city: String)
     func selectDayAt(indexPath: IndexPath)
 }
 
 enum HomeInteractorOutput {
-    case setLoading(Bool)
     case showInfo(WeatherInfoModel)
     case showList(WeatherListModel)
     case showListDetail(WeatherInfoModel)
-    case showSearchScene
 }
 
 protocol HomeInteractorDelegate: AnyObject {
@@ -29,11 +28,13 @@ protocol HomeInteractorDelegate: AnyObject {
 // MARK: - Presenter
 protocol HomePresenterProtocol {
     func load()
+    func loadWithCurrent(model: WeatherInfoModel)
+    func loadWeatherInfoList(with city: String)
     func selectDayAt(indexPath: IndexPath)
+    func openSearchView(delegate: SearchPresenterDelegate?)
 }
 
 enum HomePresenterOutput {
-    case setLoading(Bool)
     case showInfo(WeatherInfoModel)
     case showList(WeatherListModel)
 }
@@ -45,9 +46,8 @@ protocol HomeViewProtocol {
 
 // MARK: - Router
 enum HomeRoute {
-    // TODO: - Buraya detail model'i eklenecek
-    case detail
-    case search
+    case detail(model: WeatherInfoModel)
+    case search(delegate: SearchPresenterDelegate?)
 }
 
 protocol HomeRouterProtocol {

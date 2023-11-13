@@ -20,19 +20,23 @@ final class InfoView: UIView {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
         return imageView
     }()
     
     private let valueLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .semiBold, size: 22)
+        label.font = .customFont(type: .semiBold, size: 16)
+        label.numberOfLines = 0
         return label
     }()
     
     private let infoLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .thin, size: 12)
-        label.textColor = .darkGray
+        label.font = .customFont(type: .light, size: 12)
+        label.textColor = .white
+        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 1
         return label
     }()
     
@@ -65,7 +69,6 @@ final class InfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews()
-        configureContents()
     }
     
     required init?(coder: NSCoder) {
@@ -94,18 +97,10 @@ extension InfoView {
     
     private func addStackView() {
         contentView.addSubview(stackView)
-        stackView.edgesToSuperview(insets: .uniform(20))
+        stackView.edgesToSuperview(insets: .uniform(12))
         stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(valueLabel)
         stackView.addArrangedSubview(infoLabel)
         iconImageView.size(.init(width: 44, height: 44))
-    }
-}
-
-// MARK: - ConfigureContents
-extension InfoView {
-    
-    private func configureContents() {
-         
     }
 }

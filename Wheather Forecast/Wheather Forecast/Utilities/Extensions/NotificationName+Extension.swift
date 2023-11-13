@@ -8,5 +8,5 @@
 import Foundation
 
 extension Notification.Name {
-    static let changingTempUnit = Notification.Name(rawValue: "changingTempUnit")
+    static let requestWithLocation = Notification.Name(rawValue: "requestWithLocation")
 }

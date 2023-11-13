@@ -22,11 +22,23 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func load() {
-        interactor.load(cityName: "Diyarbakir")
+        interactor.load()
+    }
+    
+    func loadWeatherInfoList(with city: String) {
+        interactor.loadWeatherList(city: city)
     }
     
     func selectDayAt(indexPath: IndexPath) {
         interactor.selectDayAt(indexPath: indexPath)
+    }
+    
+    func loadWithCurrent(model: WeatherInfoModel) {
+        view.handleOutput(.showInfo(model))
+    }
+    
+    func openSearchView(delegate: SearchPresenterDelegate?) {
+        router.navigate(to: .search(delegate: delegate))
     }
 }
 
@@ -35,22 +47,12 @@ extension HomePresenter: HomeInteractorDelegate {
     
     func handleOutput(_ output: HomeInteractorOutput) {
         switch output {
-        case .setLoading(let bool):
-            print(bool)
         case .showInfo(let weatherInfoModel):
-            print(weatherInfoModel)
             view.handleOutput(.showInfo(weatherInfoModel))
         case .showList(let weatherListModel):
-            print(weatherListModel)
             view.handleOutput(.showList(weatherListModel))
         case .showListDetail(let weatherInfoModel):
-            print(weatherInfoModel)
-            router.navigate(to: .detail)
-        case .showSearchScene:
-            print("Showing search scene")
-            router.navigate(to: .detail)
+            router.navigate(to: .detail(model: weatherInfoModel))
         }
     }
-    
-    
 }

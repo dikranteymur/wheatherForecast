@@ -8,7 +8,8 @@ target 'Wheather Forecast' do
   # Pods for Wheather Forecast
   pod 'Alamofire'
   pod 'TinyConstraints'
-  pod 'Kingfisher', '~> 7.0'
+  pod 'SDWebImage', '~> 5.18'
+  pod 'IQKeyboardManager', '~> 6.5'
 
   target 'Wheather ForecastTests' do
     inherit! :search_paths

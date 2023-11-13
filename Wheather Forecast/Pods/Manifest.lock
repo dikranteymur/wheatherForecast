@@ -1,24 +1,30 @@
 PODS:
   - Alamofire (5.8.0)
-  - Kingfisher (7.10.0)
+  - IQKeyboardManager (6.5.16)
+  - SDWebImage (5.18.1):
+    - SDWebImage/Core (= 5.18.1)
+  - SDWebImage/Core (5.18.1)
   - TinyConstraints (4.0.2)
 
 DEPENDENCIES:
   - Alamofire
-  - Kingfisher (~> 7.0)
+  - IQKeyboardManager (~> 6.5)
+  - SDWebImage (~> 5.18)
   - TinyConstraints
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - Kingfisher
+    - IQKeyboardManager
+    - SDWebImage
     - TinyConstraints
 
 SPEC CHECKSUMS:
   Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
-  Kingfisher: a18f05d3b6d37d8650ee4a3e61d57a28fc6207f6
+  IQKeyboardManager: 024b54d7dcb765c5bc99882cb4d5ea24a8cb7c3c
+  SDWebImage: ebdbcebc7933a45226d9313bd0118bc052ad458b
   TinyConstraints: 7b7ccc0c485bb3bb47082138ff28bc33cd49897f
 
-PODFILE CHECKSUM: bdd97bc1454457593752922839d251a51c0608b1
+PODFILE CHECKSUM: 37559e86734e2011ffac7a8f34b6767127862c30
 
 COCOAPODS: 1.12.1

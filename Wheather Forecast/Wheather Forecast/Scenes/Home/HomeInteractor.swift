@@ -11,22 +11,16 @@ final class HomeInteractor: HomeInteractorProtocol {
     
     weak var delegate: HomeInteractorDelegate?
     private var weatherInfo: WeatherInfoModel?
-    private var weatherList: [WeatherInfoModel] = []
+    private var weatherList: WeatherListModel?
     
-    func load(cityName: String) {
-        delegate?.handleOutput(.setLoading(true))
+    func load() {
         if UserCacheHelpers.hasLocation() {
             let request = HomeWeatherRequest(lat: LocationHelper.shared.getCoordinate().lat,
                                              lon: LocationHelper.shared.getCoordinate().lon)
-            print(LocationHelper.shared.getCoordinate().lat)
-            print(LocationHelper.shared.getCoordinate().lon)
-            
             app.service.request(request: request) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let response):
-                    delegate?.handleOutput(.setLoading(false))
-                    print("Response: \(response)")
                     self.weatherInfo = response
                     delegate?.handleOutput(.showInfo(response))
                 case .failure(let error):
@@ -40,36 +34,34 @@ final class HomeInteractor: HomeInteractorProtocol {
                 guard let self = self else { return }
                 switch result {
                 case .success(let response):
+                    self.weatherList = response
                     delegate?.handleOutput(.showList(response))
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
-        } else {
-            if UserCacheHelpers.getSavedCityNames().isEmpty {
-                // TODO: - Open search screen
-                delegate?.handleOutput(.showSearchScene)
-            } else {
-                let request = HomeWeatherRequest(city: cityName)
-                app.service.request(request: request) { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let response):
-                        print(response)
-                        configureSavedCities(model: response)
-                        self.weatherInfo = response
-                        delegate?.handleOutput(.showInfo(response))
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
+        } 
+    }
+    
+    func loadWeatherList(city: String) {
+        let request = HomeHourlyWeatherListRequest(city: city)
+        app.service.request(request: request) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                self.delegate?.handleOutput(.showList(response))
+                self.weatherList = response
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
     
     func selectDayAt(indexPath: IndexPath) {
-        let model = weatherList[indexPath.row]
-        delegate?.handleOutput(.showListDetail(model))
+        if let list = weatherList?.list {
+            let model = list[indexPath.row]
+            delegate?.handleOutput(.showListDetail(model))
+        }
     }
 }
 

@@ -5,4 +5,16 @@
 //  Created by Dikran Teymur on 11.11.2023.
 //
 
-import Foundation
+// MARK: - Presenter
+protocol DetailPresenterProtocol {
+    func load()
+}
+
+enum DetailPresenterOutput {
+    case showInfo(WeatherInfoModel)
+}
+
+// MARK: - View
+protocol DetailViewProtocol: AnyObject {
+    func handleOutput(_ output: DetailPresenterOutput)
+}

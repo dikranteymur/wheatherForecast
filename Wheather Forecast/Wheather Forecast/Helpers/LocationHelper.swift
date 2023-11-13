@@ -31,6 +31,7 @@ final class LocationHelper: NSObject {
     
     func requestLocation() {
         locationManager?.requestWhenInUseAuthorization()
+        locationManager?.requestLocation()
     }
 }
 
@@ -46,6 +47,16 @@ extension LocationHelper: CLLocationManagerDelegate {
             return
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let _  = locations.first {
+            NotificationCenter.postNotificaiton(.requestWithLocation)
+        }
+    }
 }
 
 // MARK: - Helpers
@@ -53,7 +64,6 @@ extension LocationHelper {
     
     func currentLocaleIdentifier() -> String? {
         guard let id = Locale.preferredLanguages[0].split(separator: "-").first else { return nil }
-        print(id)
         return String(id)
     }
 }

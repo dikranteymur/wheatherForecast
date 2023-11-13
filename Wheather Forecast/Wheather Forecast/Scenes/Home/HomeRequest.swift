@@ -19,7 +19,7 @@ struct HomeWeatherRequest: ApiRequest {
         parameters.setApiKey()
         parameters["q"] = city
         parameters["lang"] = LocationHelper.shared.currentLocaleIdentifier()
-        parameters["metric"] = ApiUnits.metric.rawValue
+        parameters["units"] = ApiUnits.metric.rawValue
     }
     
     init(lat: Double?, lon: Double?) {
@@ -27,7 +27,7 @@ struct HomeWeatherRequest: ApiRequest {
         parameters["lat"] = lat
         parameters["lon"] = lon
         parameters["lang"] = LocationHelper.shared.currentLocaleIdentifier()
-        parameters["metric"] = ApiUnits.metric.rawValue
+        parameters["units"] = ApiUnits.metric.rawValue
     }
 }
 
@@ -42,11 +42,15 @@ struct HomeHourlyWeatherListRequest: ApiRequest {
     init(city: String) {
         parameters.setApiKey()
         parameters["q"] = city
+        parameters["units"] = ApiUnits.metric.rawValue
+        parameters["lang"] = LocationHelper.shared.currentLocaleIdentifier()
     }
     
     init(lat: Double?, lon: Double?) {
         parameters.setApiKey()
         parameters["lat"] = lat
         parameters["lon"] = lon
+        parameters["units"] = ApiUnits.metric.rawValue
+        parameters["lang"] = LocationHelper.shared.currentLocaleIdentifier()
     }
 }

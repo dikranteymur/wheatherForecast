@@ -7,7 +7,7 @@
 
 import UIKit
 import TinyConstraints
-import Kingfisher
+import SDWebImage
 
 final class HomeViewController: UIViewController, HomeViewProtocol {
     
@@ -57,21 +57,21 @@ final class HomeViewController: UIViewController, HomeViewProtocol {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
     private let temperatureLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .semiBold, size: 36)
+        label.font = .customFont(type: .semiBold, size: 78)
         label.textColor = .darkGray
         return label
     }()
     
     private let weatherInfoLabel: UILabel = {
         let label = UILabel()
-        label.font = .customFont(type: .thin, size: 12)
-        label.textColor = .red
+        label.font = .customFont(type: .light, size: 12)
+        label.textColor = .black
         return label
     }()
     
@@ -89,17 +89,23 @@ final class HomeViewController: UIViewController, HomeViewProtocol {
         return view
     }()
     
+    private let searchButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         configureContents()
+        addObserver()
         presenter?.load()
     }
     
     func handleOutput(_ output: HomePresenterOutput) {
         switch output {
-        case .setLoading(let isLoading):
-            print("IsLoading: \(isLoading)")
         case .showInfo(let weatherInfoModel):
             self.weatherInfoModel = weatherInfoModel
             configureWeatherInfo()
@@ -107,8 +113,7 @@ final class HomeViewController: UIViewController, HomeViewProtocol {
             self.weatherListModel = weatherListModel
             tableView.reloadData()
             if let count = weatherListModel.list?.count {
-                tableViewHeightConstraint?.constant = CGFloat(tableView.rowHeight * CGFloat(count))
-                tableView.layoutIfNeeded()
+                tableViewHeightConstraint?.constant = CGFloat(60.0 * CGFloat(count) + 44)
             }
         }
     }
@@ -123,6 +128,7 @@ extension HomeViewController {
         addImageView()
         addTemperatureStackView()
         addTableView()
+        addSearchButton()
     }
     
     private func addScrollView() {
@@ -138,15 +144,15 @@ extension HomeViewController {
         cityStackView.addArrangedSubview(todayLabel)
         cityStackView.topToSuperview(offset: 20)
         cityStackView.centerXToSuperview()
-        cityNameLabel.height(44)
-        todayLabel.height(44)
+        cityNameLabel.height(32)
+        todayLabel.height(32)
     }
     
     private func addImageView() {
         scrollView.addSubview(imageView)
-        imageView.topToBottom(of: cityStackView, offset: 120)
+        imageView.topToBottom(of: cityStackView, offset: 20)
         imageView.centerXToSuperview()
-        imageView.size(.init(width: 120, height: 80))
+        imageView.size(.init(width: 60, height: 60))
     }
     
     private func addTemperatureStackView() {
@@ -164,7 +170,13 @@ extension HomeViewController {
         tableView.bottomToSuperview()
         tableView.width(to: scrollView, relation: .equal)
         tableView.height(1000)
-//        tableViewHeightConstraint = tableView.height(200)
+    }
+    
+    private func addSearchButton() {
+        view.addSubview(searchButton)
+        searchButton.topToSuperview(offset: 20, usingSafeArea: true)
+        searchButton.trailingToSuperview(offset: 20)
+        searchButton.size(.init(width: 44, height: 44))
     }
 }
 
@@ -175,6 +187,8 @@ extension HomeViewController {
         view.backgroundColor = .white
         configureScrollView()
         configureTableView()
+        configureSearchButton()
+        
     }
     
     private func configureWeatherInfo() {
@@ -182,14 +196,13 @@ extension HomeViewController {
         cityNameLabel.text = model.name
         todayLabel.text = DateHelper.shared.currentDaySymbol(length: .full)
         if let icon = model.weather?.first?.icon {
-            imageView.kf.getImage(with: icon)
+            imageView.getImage(with: icon)
         }
         if let temp = model.main?.temp {
-            temperatureLabel.text = String(Int(temp))
+            temperatureLabel.text = String(Int(temp)).appending("ºC")
         }
         if let description = model.weather?.first?.description {
             weatherInfoLabel.text = description.capitalized
-            
         }
     }
     
@@ -202,6 +215,10 @@ extension HomeViewController {
         tableView.dataSource = self
     }
     
+    private func configureSearchButton() {
+        searchButton.layer.zPosition = 3
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -209,14 +226,18 @@ extension HomeViewController: UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.scrollView {
-            if self.scrollView.contentOffset.y >= 320 {
+            if self.scrollView.contentOffset.y >= 200 {
                 tableView.isScrollEnabled = true
-                tableView.contentOffset.y = self.scrollView.contentOffset.y - 320
-//                weatherInfoLabel.text = "\(data.cityName) | \(data.info)"
+                tableView.contentOffset.y = self.scrollView.contentOffset.y - 200
+                if let cityName = weatherInfoModel?.name, let info = weatherInfoModel?.weather?.first?.description {
+                    weatherInfoLabel.text = "\(cityName) | \(info.capitalized)"
+                }
             } else {
                 tableView.isScrollEnabled = false
                 tableView.contentOffset.y = .zero
-//                weatherInfoLabel.text = "Parcali Bulutlu"
+                if let info = weatherInfoModel?.weather?.first?.description {
+                    weatherInfoLabel.text = "\(info.capitalized)"
+                }
             }
         }
         
@@ -226,7 +247,6 @@ extension HomeViewController: UITableViewDelegate {
             } else {
                 tableView.isScrollEnabled = false
             }
-            print("TABLEVIEW")
         }
     }
     
@@ -234,13 +254,8 @@ extension HomeViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "5 GUNLUK TAHMIN"
-    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Count: \(weatherListModel?.list?.count)")
         return weatherListModel?.list?.count ?? 0
     }
     
@@ -253,9 +268,40 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let detailViewController = DetailBuilder.make()
-//        let nav = UINavigationController(rootViewController: detailViewController)
-//        present(nav, animated: true)
         presenter?.selectDayAt(indexPath: indexPath)
+    }
+}
+
+// MARK: - Observers
+extension HomeViewController {
+    
+    private func addObserver() {
+        NotificationCenter.addNotification(self, name: .requestWithLocation, selector: #selector(locationRequested))
+    }
+}
+
+// MARK: - Actions
+extension HomeViewController {
+
+    
+    @objc
+    private func searchButtonTapped() {
+        presenter?.openSearchView(delegate: self)
+    }
+    
+    @objc
+    private func locationRequested() {
+        presenter?.load()
+    }
+}
+
+// MARK: - SearchPresenterProtocol
+extension HomeViewController: SearchPresenterDelegate {
+    
+    func handleHomeView(with model: WeatherInfoModel) {
+        presenter?.loadWithCurrent(model: model)
+        if let city = model.name {
+            presenter?.loadWeatherInfoList(with: city)
+        }
     }
 }

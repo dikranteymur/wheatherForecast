@@ -83,7 +83,8 @@ extension WeatherCell {
         stackView.addArrangedSubview(minTempLabel)
         stackView.addArrangedSubview(sepLabel)
         stackView.addArrangedSubview(maxTempLabel)
-        stackView.edgesToSuperview(insets: .uniform(20))
+        stackView.verticalToSuperview(insets: .vertical(12))
+        stackView.horizontalToSuperview(insets: .horizontal(30))
         weatherImageView.size(.init(width: 24, height: 24))
     }
 }
@@ -92,13 +93,19 @@ extension WeatherCell {
 extension WeatherCell {
     
     private func configureContents() {
+        selectionStyle = .none
         guard let model = model else { return }
-        dayLabel.text = DateHelper.shared.getDaySymbolFromDateString(date: date)
-        weatherImageView.image = UIImage()
+        dayLabel.text = DateHelper.shared.getDaySymbolFromDateString(date: model.date)
+        if let icon = model.weather?.first?.icon {
+            weatherImageView.getImage(with: icon)
+        }
         if let tempMin = model.main?.tempMin, let tempMax = model.main?.tempMax {
-            minTempLabel.text = String(tempMin)
-            maxTempLabel.text = String(tempMax)
+            minTempLabel.text = String(Int(tempMin))
+            maxTempLabel.text = String(Int(tempMax))
             sepLabel.text = "/"
+        }
+        if let date = model.date, let day = DateHelper.shared.getDayFrom(iso: date) {
+            dayLabel.text = String(day)
         }
     }
 }

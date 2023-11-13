@@ -7,40 +7,43 @@
 
 import UIKit
 import TinyConstraints
+import SDWebImage
 
-final class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController, DetailViewProtocol {
     
-    private let hoursCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: 44, height: 60)
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.registerFromNib(HourlyCollectionViewCell.self)
-        return collectionView
+    var presenter: DetailPresenterProtocol?
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .customFont(type: .regular, size: 26)
+        label.textColor = .black
+        return label
     }()
     
     private let infoStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .top
-        stackView.distribution = .equalCentering
+        stackView.distribution = .fillEqually
+        stackView.spacing = 8
         return stackView
     }()
     
-    private let windSpeedView: InfoView = {
-        let view = InfoView()
-        view.setView(image: UIImage(systemName: "wind")!, value: "8 km/s", info: "Ruzgar Hizi")
-        return view
-    }()
-    
-    private let humidityView: InfoView = {
-        let view = InfoView()
-        view.setView(image: UIImage(systemName: "humidity")!, value: "%65", info: "Nem Miktari")
-        return view
-    }()
+    private let weatherInfoView = InfoView()
+    private let windSpeedInfoView = InfoView()
+    private let humidityInfoView = InfoView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         configureContents()
+        presenter?.load()
+    }
+    
+    func handleOutput(_ output: DetailPresenterOutput) {
+        switch output {
+        case .showInfo(let weatherInfoModel):
+            configureInfoWith(model: weatherInfoModel)
+        }
     }
 }
 
@@ -48,23 +51,23 @@ final class DetailViewController: UIViewController {
 extension DetailViewController {
     
     private func addSubviews() {
-        addHoursCollectionView()
+        addTitleLabel()
         addInfoStackView()
     }
     
-    private func addHoursCollectionView() {
-        view.addSubview(hoursCollectionView)
-        hoursCollectionView.topToSuperview(offset: 20, usingSafeArea: true)
-        hoursCollectionView.horizontalToSuperview(insets: .horizontal(20))
-        hoursCollectionView.height(120)
+    private func addTitleLabel() {
+        view.addSubview(titleLabel)
+        titleLabel.topToSuperview(offset: 20, usingSafeArea: true)
+        titleLabel.centerXToSuperview()
     }
     
     private func addInfoStackView() {
         view.addSubview(infoStackView)
-        infoStackView.topToBottom(of: hoursCollectionView, offset: 20)
+        infoStackView.topToBottom(of: titleLabel, offset: 20)
         infoStackView.horizontalToSuperview(insets: .horizontal(20))
-        infoStackView.addArrangedSubview(windSpeedView)
-        infoStackView.addArrangedSubview(humidityView)
+        infoStackView.addArrangedSubview(weatherInfoView)
+        infoStackView.addArrangedSubview(windSpeedInfoView)
+        infoStackView.addArrangedSubview(humidityInfoView)
     }
 }
 
@@ -72,9 +75,21 @@ extension DetailViewController {
 extension DetailViewController {
     
     private func configureContents() {
-        navigationItem.title = "Hava Durumu"
         view.backgroundColor = .white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark.circle.fill")!, style: .done, target: self, action: #selector(close))
+    }
+    
+    private func configureInfoWith(model: WeatherInfoModel) {
+        titleLabel.text = "Hava Durumu"
+        weatherInfoView.setView(image: UIImage(systemName: "thermometer.sun")!,
+                                value: String(Int(model.main?.temp ?? 0)).appending("ºC"),
+                                info: model.weather?.first?.description?.capitalized ?? "")
+        
+        windSpeedInfoView.setView(image: UIImage(systemName: "wind")!,
+                                  value: String(model.wind?.speed ?? 0).appending("km/s"),
+                                  info: "Ruzgar Hizi")
+        humidityInfoView.setView(image: UIImage(systemName: "humidity")!,
+                                 value: String(Int(model.main?.humidity ?? 0)).appending("%"),
+                                 info: "Nem Orani")
     }
 }
 

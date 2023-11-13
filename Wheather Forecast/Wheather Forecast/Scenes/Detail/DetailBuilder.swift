@@ -9,9 +9,10 @@ import UIKit
 
 final class DetailBuilder {
     
-    static func make() -> DetailViewController {
-        let viewController = DetailViewController()
-        return viewController
+    static func make(model: WeatherInfoModel) -> DetailViewController {
+        let view = DetailViewController()
+        let presenter = DetailPresenter(view: view, weatherInfoModel: model)
+        view.presenter = presenter
+        return view
     }
 }
-
