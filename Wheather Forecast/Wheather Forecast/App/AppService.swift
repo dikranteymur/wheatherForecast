@@ -11,7 +11,7 @@ import Alamofire
 typealias ResponseData<T: Decodable> = (Result<T, NetworkError>) -> Void
 
 protocol AppServiceProtocol {
-    func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?)
+    mutating func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?)
 }
 
 struct AppService: AppServiceProtocol {
@@ -28,21 +28,25 @@ struct AppService: AppServiceProtocol {
         session = Session(configuration: configuration, cachedResponseHandler: responserCacher)
     }
     
-    func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?) {
-        let isReachable = NetworkReachabilityManager()?.isReachable ?? false
-        if !isReachable {
-            result?(.failure(.connectionError))
-        } else {
-            let request = createRequest(request: request)
-            request?.validate()
-            request?.responseDecodable(of: T.ResponseModel.self) { (response) in
-                switch response.result {
-                case .success(let value):
-                    result?(.success(value))
-                case .failure(let error):
-                    result?(.failure(.baseError(error)))
-                }
+    mutating func request<T: DecodableResponseRequest>(request: T, result: ResponseData<T.ResponseModel>?) {
+        manageCachePolicy()
+        let request = createRequest(request: request)
+        request?.validate()
+        request?.responseDecodable(of: T.ResponseModel.self) { (response) in
+            switch response.result {
+            case .success(let value):
+                result?(.success(value))
+            case .failure(let error):
+                result?(.failure(.baseError(error)))
             }
+        }
+    }
+    
+    private func manageCachePolicy() {
+        if NetworkReachabilityManager()?.isReachable ?? false {
+            session.sessionConfiguration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        } else {
+            session.sessionConfiguration.requestCachePolicy = .returnCacheDataDontLoad
         }
     }
 }
